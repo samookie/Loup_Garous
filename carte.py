@@ -3,7 +3,7 @@ from discord.ext import commands
 @commands.command()
 async def carte(ctx):
     embed = discord.Embed(
-        colour=discord.Colour.red()
+        color=discord.Colour.red().value(),
         description="Le loup garou peut manger un caca chaque nuit",
         title="Tu es le Loup Garou"
     )
