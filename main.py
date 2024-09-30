@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 #bot.load_extension("carte")
-@commands.command()
+@bot.command()
 async def carte(ctx):
     embed = discord.Embed(
         color=discord.Colour.red().value(),
