@@ -10,6 +10,7 @@ const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
 
 setupDiscordSdk().then(() => {
   console.log("Discord SDK is authenticated");
+  appendVoiceChannelName();
 
   // We can now make API calls within the scopes we requested in setupDiscordSDK()
   // Note: the access_token returned is a sensitive secret and should be treated as such
@@ -31,6 +32,27 @@ async function setupDiscordSdk() {
       "applications.commands"
     ],
   });
+
+async function appendVoiceChannelName(){
+  const app = document.querySelector('#app');
+
+  let activityChannelName = 'Unknown';
+
+  if (discordSdk.channelId != null && discordSdk.guildId != null ){
+    const channel = await discordSdk.commands.getChannel({channel_id: discordSdk.channelId});
+    if(channel.name != null){
+      activityChannelName = channel.name;
+    }
+  }
+
+   // Update the UI with the name of the current voice channel
+   const textTagString = `Activity Channel: "${activityChannelName}"`;
+   const textTag = document.createElement('p');
+   textTag.textContent = textTagString;
+   app.appendChild(textTag);
+}
+
+
 
   // Retrieve an access_token from your activity's server
   // Note: We need to prefix our backend `/api/token` route with `/.proxy` to stay compliant with the CSP.
